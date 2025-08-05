@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSP - Sistema de Entrenamiento Cognitivo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+    <meta name="description" content="Sistema de entrenamiento cognitivo TSP - Desarrolla habilidades de lectura crítica, creatividad y pensamiento">
+    <meta name="keywords" content="TSP, entrenamiento cognitivo, lectura crítica, habilidades pensamiento, educación">
+    <meta name="author" content="Thinking Skills Program">
+</head>
+<body>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <!-- Header principal -->
+        <header>
+            <h1>🎯 TSP - Entrenamiento Cognitivo</h1>
+        </header>
+        
+        <!-- Formulario de login -->
+        <main class="login-form">
+            <h2>Ingresa tu código de estudiante</h2>
+            
+            <div class="input-group">
+                <input 
+                    type="text" 
+                    id="codigo" 
+                    name="codigo"
+                    placeholder="Ejemplo: AB1234"
+                    maxlength="10"
+                    autocomplete="off"
+                    spellcheck="false"
+                    required
+                    aria-label="Código de estudiante"
+                >
+            </div>
+            
+            <button 
+                onclick="iniciarSesion()" 
+                type="button" 
+                class="login-button"
+                aria-label="Iniciar sesión en el sistema TSP"
+            >
+                🔐 Entrar al Sistema
+            </button>
+            
+            <div class="help-text">
+                <p>💡 <strong>¿No tienes código?</strong></p>
+                <p>Solicítalo a tu profesor o administrador</p>
+                <p><small>Los códigos tienen formato: 2 letras + 4 números</small></p>
+            </div>
+        </main>
+        
+        <!-- Footer con información -->
+        <footer class="footer-info">
+            <p>🧠 <strong>Thinking Skills Program v2.0</strong></p>
+            <p>Desarrolla tus habilidades cognitivas</p>
+            <p><small>Lectura Crítica • Creatividad • Pensamiento Digital</small></p>
+        </footer>
+    </div>
+
+    <!-- Scripts principales -->
+    <script src="js/supabase-client.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Script de inicialización -->
+    <script>
+        // Configuración global del sistema
+        window.TSP_CONFIG = {
+            version: '2.0',
+            debug: true, // Cambiar a false en producción
+            timeouts: {
+                login: 10000, // 10 segundos
+                session: 24 * 60 * 60 * 1000 // 24 horas
+            }
+        };
+        
+        // Log de inicialización
+        console.log('📱 TSP Sistema v2.0 iniciando...');
+        console.log('🔗 Conectando con Supabase...');
+        console.log('✅ Credenciales configuradas correctamente');
+        
+        // Verificar soporte del navegador
+        if (!window.localStorage) {
+            console.warn('⚠️ LocalStorage no disponible - las sesiones no persistirán');
+        }
+        
+        if (!window.fetch) {
+            console.error('❌ Fetch API no disponible - navegador no compatible');
+            alert('Tu navegador no es compatible. Por favor actualiza a una versión más reciente.');
+        }
+        
+        // Event listener para errores globales
+        window.addEventListener('error', function(event) {
+            console.error('❌ Error global capturado:', event.error);
+            
+            // Solo mostrar al usuario en modo debug
+            if (window.TSP_CONFIG?.debug) {
+                const errorMsg = `Error: ${event.error?.message || 'Error desconocido'}`;
+                console.log('🐛 Debug info:', errorMsg);
+            }
+        });
+        
+        // Event listener para promesas rechazadas
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('❌ Promesa rechazada:', event.reason);
+            
+            if (window.TSP_CONFIG?.debug) {
+                console.log('🐛 Promise rejection:', event.reason);
+            }
+        });
+        
+        // Precargar recursos críticos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Precargar fuentes si es necesario
+            const fontPreload = document.createElement('link');
+            fontPreload.rel = 'preload';
+            fontPreload.as = 'font';
+            fontPreload.type = 'font/woff2';
+            fontPreload.crossOrigin = 'anonymous';
+            
+            // Verificar conexión a internet
+            if (!navigator.onLine) {
+                console.warn('⚠️ Sin conexión a internet detectada');
+            }
+            
+            // Listener para cambios de conectividad
+            window.addEventListener('online', function() {
+                console.log('🌐 Conexión a internet restaurada');
+                if (window.TSP?.probarConexion) {
+                    window.TSP.probarConexion();
+                }
+            });
+            
+            window.addEventListener('offline', function() {
+                console.warn('⚠️ Conexión a internet perdida');
+            });
+        });
+    </script>
+    
+    <!-- Google Analytics o similar (opcional) -->
+    <!-- 
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_TRACKING_ID');
+    </script>
+    -->
+</body>
+</html>
